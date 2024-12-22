@@ -27,9 +27,9 @@ class PCA:
         normalized_img = self.normalization(image)
                             
         covariance_matrix = self.covariance(normalized_img)
-
+        print("covariance matrix: ",covariance_matrix)
         eigen_values,eigen_vectors = self.calc_eign(covariance_matrix) 
-
+        print("eigen_values: ",eigen_values)
         eigen_vectors = eigen_vectors.T   
 
 
