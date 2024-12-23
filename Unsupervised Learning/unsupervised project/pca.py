@@ -19,7 +19,8 @@ class PCA:
         return np.dot(data.T,data)/len(data)
 
     def calc_eign(self,matrix):
-        eigen_values,eigen_vectors = np.linalg.eig(matrix)
+        get_eigen = get_Eigens()
+        eigen_values,eigen_vectors = get_eigen.find(matrix)
         return eigen_values,eigen_vectors
 
 
@@ -27,10 +28,11 @@ class PCA:
         normalized_img = self.normalization(image)
                             
         covariance_matrix = self.covariance(normalized_img)
-        print("covariance matrix: ",covariance_matrix)
+        # print("covariance matrix: ",covariance_matrix)
+        print("eigen function")
         eigen_values,eigen_vectors = self.calc_eign(covariance_matrix) 
-        print("eigen_values: ",eigen_values)
-        eigen_vectors = eigen_vectors.T   
+        # print("eigen_values: ",eigen_values)
+        eigen_vectors = eigen_vectors
 
 
         indecis = np.argsort(eigen_values)[::-1]
@@ -48,3 +50,51 @@ class PCA:
         result =np.dot(image,self.components)
 
         return result+self.mean
+
+from sympy import symbols, Eq, solve, re, Matrix
+
+class get_Eigens():
+    def __init__(self):
+        pass
+    def calc_determinant(self,matrix,depth=0):
+        if matrix.shape ==(2,2):
+            return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0]
+        else:# if the shape is (3,3) or higher
+            result=0
+            for i in range(len(matrix)):
+                helper = np.delete(matrix,i,axis=1)
+                helper = np.delete(helper,0,axis=0)
+                result+= (-1)**i * matrix[0][i]* self.calc_determinant(helper,depth+1)
+            return result
+        
+    def calc_eigenvalue(self,matrix):
+        y = symbols('y')
+        idintity_matrix = np.zeros(matrix.shape);np.fill_diagonal(idintity_matrix,1)
+        result =  matrix- y*idintity_matrix
+        determinant = self.calc_determinant(result)
+        equation = Eq(determinant,0)
+        
+        return solve(equation,y)
+    
+    def calc_eigenvector(self,matrix, eigenvalues):
+        eigenvectors = []#note the matrix must equalt to 8, 5, 4 and 3
+        idintity_matrix = np.zeros(matrix.shape);np.fill_diagonal(idintity_matrix,1)
+
+        for eigenvalue in eigenvalues:
+            _, _, vh = np.linalg.svd(matrix - eigenvalue*idintity_matrix)
+            eigenvector = vh[-1]  
+            eigenvector = eigenvector / np.linalg.norm(eigenvector)  # Normalize the eigenvector
+        
+            if eigenvector[0] < 0:
+                eigenvector = -eigenvector
+            eigenvectors.append(eigenvector)
+
+        
+        return eigenvectors
+    def find(self,matrix):
+        
+        # print(result)
+        eigenvalues = self.calc_eigenvalue(matrix)
+        eigenvalues = [float(re(eigenvalue)) for eigenvalue in eigenvalues]
+        eigenvectors =self.calc_eigenvector(matrix,eigenvalues)
+        return np.array(eigenvalues),np.array(eigenvectors)
