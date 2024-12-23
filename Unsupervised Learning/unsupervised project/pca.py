@@ -20,7 +20,7 @@ class PCA:
 
     def calc_eign(self,matrix):
         get_eigen = get_Eigens()
-        eigen_values,eigen_vectors = get_eigen.find(matrix)
+        eigen_values,eigen_vectors = get_eigen.eig(matrix)
         return eigen_values,eigen_vectors
 
 
@@ -32,8 +32,7 @@ class PCA:
         print("eigen function")
         eigen_values,eigen_vectors = self.calc_eign(covariance_matrix) 
         # print("eigen_values: ",eigen_values)
-        eigen_vectors = eigen_vectors
-
+        eigen_vectors =np.array( [ [value/np.linalg.norm(eigen_vector) for value in eigen_vector] for eigen_vector in eigen_vectors])
 
         indecis = np.argsort(eigen_values)[::-1]
         
@@ -68,13 +67,16 @@ class get_Eigens():
             return result
         
     def calc_eigenvalue(self,matrix):
-        y = symbols('y')
-        idintity_matrix = np.zeros(matrix.shape);np.fill_diagonal(idintity_matrix,1)
-        result =  matrix- y*idintity_matrix
-        determinant = self.calc_determinant(result)
-        equation = Eq(determinant,0)
+        # # y = symbols('y')
+        # # idintity_matrix = np.zeros(matrix.shape);np.fill_diagonal(idintity_matrix,1)
+        # # result =  matrix- y*idintity_matrix
+        # # determinant = self.calc_determinant(result)
+        # # equation = Eq(determinant,0)
         
-        return solve(equation,y)
+        # return solve(equation,y)
+        poly = np.poly(matrix)
+        eigenvalues = np.roots(poly)
+        return eigenvalues
     
     def calc_eigenvector(self,matrix, eigenvalues):
         eigenvectors = []#note the matrix must equalt to 8, 5, 4 and 3
@@ -91,7 +93,7 @@ class get_Eigens():
 
         
         return eigenvectors
-    def find(self,matrix):
+    def eig(self,matrix):
         
         # print(result)
         eigenvalues = self.calc_eigenvalue(matrix)
