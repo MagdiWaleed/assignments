@@ -7,8 +7,8 @@ class PCA:
         self.mean = None
         
 
-    def normalization(self,image):
-        temp = deepcopy(image)
+    def normalization(self,data):
+        temp = deepcopy(data)
         mean = temp.mean(axis=0)
         temp = temp - mean
         self.mean= mean
@@ -24,8 +24,8 @@ class PCA:
         return eigen_values,eigen_vectors
 
 
-    def fit(self,image):
-        normalized_img = self.normalization(image)
+    def fit(self,data):
+        normalized_img = self.normalization(data)
                             
         covariance_matrix = self.covariance(normalized_img)
         # print("covariance matrix: ",covariance_matrix)
@@ -40,14 +40,14 @@ class PCA:
 
         self.components= eigen_vectors[:self.n_components]
 
-    def transform(self,image):
-        temp = deepcopy(image)
+    def transform(self,data):
+        temp = deepcopy(data)
         temp = temp - self.mean
-        new_image = np.dot(temp,self.components.T)
-        return np.array(new_image)
+        new_data = np.dot(temp,self.components.T)
+        return np.array(new_data)
 
-    def reverse(self,image):
-        result =np.dot(image,self.components)
+    def reverse(self,data):
+        result =np.dot(data,self.components)
 
         return result+self.mean
 
