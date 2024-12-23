@@ -38,6 +38,7 @@ class PCA:
         eigen_vectors = eigen_vectors[indecis]
 
         self.components= eigen_vectors[:self.n_components]
+        
     def transform(self,image):
         temp = deepcopy(image)
         temp = temp - self.mean
