@@ -29,7 +29,6 @@ class PCA:
                             
         covariance_matrix = self.covariance(normalized_img)
         # print("covariance matrix: ",covariance_matrix)
-        print("eigen function")
         eigen_values,eigen_vectors = self.calc_eign(covariance_matrix) 
         # print("eigen_values: ",eigen_values)
         eigen_vectors =np.array( [ [value/np.linalg.norm(eigen_vector) for value in eigen_vector] for eigen_vector in eigen_vectors])
@@ -49,8 +48,6 @@ class PCA:
         result =np.dot(image,self.components)
 
         return result+self.mean
-
-from sympy import symbols, Eq, solve, re, Matrix
 
 class get_Eigens():
     def __init__(self):
@@ -93,10 +90,14 @@ class get_Eigens():
 
         
         return eigenvectors
-    def eig(self,matrix):
-        
+    def main(self,matrix):
         # print(result)
         eigenvalues = self.calc_eigenvalue(matrix)
-        eigenvalues = [float(re(eigenvalue)) for eigenvalue in eigenvalues]
+        eigenvalues = np.real(eigenvalues)
         eigenvectors =self.calc_eigenvector(matrix,eigenvalues)
         return np.array(eigenvalues),np.array(eigenvectors)
+    @staticmethod
+    def eig(matrix):
+        get_eigen = get_Eigens()
+        eigen_values,eigen_vectors = get_eigen.main(matrix)
+        return eigen_values,eigen_vectors
