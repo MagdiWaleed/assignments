@@ -36,9 +36,10 @@ class PCA:
         indecis = np.argsort(eigen_values)[::-1]
         
         eigen_vectors = eigen_vectors[indecis]
+        self.eigen_values = eigen_values[indecis]
 
         self.components= eigen_vectors[:self.n_components]
-        
+
     def transform(self,image):
         temp = deepcopy(image)
         temp = temp - self.mean
