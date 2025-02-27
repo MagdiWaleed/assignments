@@ -2,13 +2,13 @@ package view.admin;
 
 import java.util.Scanner;
 
-import models.Travel;
-import models.User;
+import models.TravelModel;
+import models.UserModel;
 import view.Helper;
 
 public class AdminPage {
     
-    public static void loadPgae(User[] all_users, Travel[] all_Travels){
+    public static void loadPgae(UserModel[] all_users, TravelModel[] all_Travels){
         Scanner AdminScanner = new Scanner(System.in);
         boolean logout=false;
         do{
@@ -29,7 +29,7 @@ public class AdminPage {
                     ///////////////////////////////////
                     
                     Helper.clearScreen();
-                    AllTravlesController.viewTravelsList(all_Travels);
+                    AllTravlesView.viewTravelsList(all_Travels);
                     System.out.println("Enter the number of travel u want to view its details... " );
                     String allTravelsChooser = AdminScanner.next();
                     if (allTravelsChooser.equals("q")) break;
@@ -39,7 +39,7 @@ public class AdminPage {
                     }
                         ///// SINGLE SCREEN DETAILS /////
                         Helper.clearScreen();
-                        SingleTravelAdminDetailsController.getTravleDetails(all_Travels[Integer.parseInt(allTravelsChooser)-1], all_users);
+                        SingleTravelAdminDetailsView.getTravleDetails(all_Travels[Integer.parseInt(allTravelsChooser)-1], all_users);
                         System.out.println("Enter anything to go back... ");
                         AdminScanner.next().charAt(0);
                     break;
@@ -47,7 +47,7 @@ public class AdminPage {
 
                 case "2":{
                     Helper.clearScreen();
-                    AllUsersController.viewAllUsers(all_users);
+                    AllUsersView.viewAllUsers(all_users);
                     System.out.println("Enter the number of user you want to view his/her details or (q) to quit... " );
                     String allTravelsChooser = AdminScanner.next();
                     if (allTravelsChooser.equals("q")) break;
@@ -58,7 +58,7 @@ public class AdminPage {
                         ///// SINGLE USER SCREEN /////
                         //////////////////////////////
                         Helper.clearScreen();
-                        SingleUserAdminDetailsController.getUserDetails(all_users[Integer.parseInt(allTravelsChooser)-1],all_Travels);
+                        SingleUserAdminDetailsView.getUserDetails(all_users[Integer.parseInt(allTravelsChooser)-1],all_Travels);
                         System.out.println("Enter anything to go back... ");
                         AdminScanner.next().charAt(0);
                     break;

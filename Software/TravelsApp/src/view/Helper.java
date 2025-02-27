@@ -1,8 +1,6 @@
 package view;
 
 
-import java.io.IOException;
-
 public class Helper {
 
     public static void clearScreen() {

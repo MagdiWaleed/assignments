@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class User {
+public class UserModel {
 
     String username;
     double original_money;
@@ -22,7 +22,7 @@ public class User {
         return this.original_money;
     }
 
-    public User(String username, double original_money) {
+    public UserModel(String username, double original_money) {
         this.username = username;
         this.original_money = original_money;
         
@@ -35,7 +35,7 @@ public class User {
         return ids;
     }
 
-    public User(String username, double original_money, int [] travels_ids) {
+    public UserModel(String username, double original_money, int [] travels_ids) {
         this.username = username;
         this.original_money = original_money;
         
@@ -51,12 +51,12 @@ public class User {
     }
     
 
-    public Travel[] getMyTravels(Travel[] travelsList){
-        Travel[] myTravleList = new Travel[travels_ids.size()];
+    public TravelModel[] getMyTravels(TravelModel[] travelsList){
+        TravelModel[] myTravleList = new TravelModel[travels_ids.size()];
         int counter = 0;
         for (Integer myTravelId  : this.travels_ids) {
 
-            for (Travel travel : travelsList) {
+            for (TravelModel travel : travelsList) {
                 if (travel.id == myTravelId){
                     myTravleList[counter] = travel;
                     counter++;
@@ -67,7 +67,7 @@ public class User {
         return myTravleList;
     }
     
-    public boolean addTravel(Travel travel){
+    public boolean addTravel(TravelModel travel){
         if (this.getTheRestOfTheMoney()>= travel.price && travel.numberOfAvilableMembers()-1 >=0) {
             spentMoney += travel.price;
             travels_ids.add(travel.id);
@@ -80,7 +80,7 @@ public class User {
         
     }
 
-    public void removeTravle(Travel travel){
+    public void removeTravle(TravelModel travel){
        spentMoney-= travel.price;
        for(int i=0; i< travels_ids.size();i++){
             if (travel.id==travels_ids.get(i)){

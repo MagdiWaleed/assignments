@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class Travel {
+public class TravelModel {
     static int global_id =0;
 
     int id;
@@ -43,7 +43,7 @@ public class Travel {
     }
 
 
-    public Travel( String title, String description, String city, double price, int maxMembers) {
+    public TravelModel( String title, String description, String city, double price, int maxMembers) {
         id = global_id;
         global_id++;
         this.title = title;
@@ -70,11 +70,11 @@ public class Travel {
     
     }
 
-    public User[] getAllMembers(User[] all_users){
-        User[] my_users = new User[users_usernames.size()];
+    public UserModel[] getAllMembers(UserModel[] all_users){
+        UserModel[] my_users = new UserModel[users_usernames.size()];
         int counter = 0;
 
-        for(User user : all_users){
+        for(UserModel user : all_users){
 
           for (String usrename: users_usernames){
             

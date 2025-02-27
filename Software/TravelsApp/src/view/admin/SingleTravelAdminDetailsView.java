@@ -1,10 +1,10 @@
 package view.admin;
 
-import models.Travel;
-import models.User;
+import models.TravelModel;
+import models.UserModel;
 
-public class SingleTravelAdminDetailsController{
-    public static void getTravleDetails(Travel travel,User[] all_users){
+public class SingleTravelAdminDetailsView{
+    public static void getTravleDetails(TravelModel travel,UserModel[] all_users){
         System.out.println(" **   Title: " + travel.getTitle());
         System.out.println(" **   Description: " + travel.getDescription());
         System.out.println(" **   City: " + travel.getCity());
@@ -13,7 +13,7 @@ public class SingleTravelAdminDetailsController{
         System.out.println(" **   Number of my max members: " + travel.getMaxMembers());
         System.out.println(" **   list of memmbers: ");
         int counter = 1;
-        for (User user : travel.getAllMembers(all_users)) {
+        for (UserModel user : travel.getAllMembers(all_users)) {
             System.out.println("        **  "+counter+")"+"    username: "+user.getUsername()+" ****" );
             counter++;
         }

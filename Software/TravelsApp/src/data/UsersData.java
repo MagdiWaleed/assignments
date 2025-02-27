@@ -1,14 +1,14 @@
 package data;
 
-import models.Travel;
-import models.User;
+import models.TravelModel;
+import models.UserModel;
 
 public class UsersData {
-        public static User[] generateUsersData(Travel [] travelData){
-        User[] usersData = {
-            new User("magdi",500.0),
-            new User("ahmed", 4000.0),
-            new User("ali",350.0)
+        public static UserModel[] generateUsersData(TravelModel [] travelData){
+        UserModel[] usersData = {
+            new UserModel("magdi",500.0),
+            new UserModel("ahmed", 4000.0),
+            new UserModel("ali",350.0)
         };
         
         usersData[0].addTravel(travelData[0]);

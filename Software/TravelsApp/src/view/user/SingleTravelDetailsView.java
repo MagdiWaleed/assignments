@@ -1,11 +1,11 @@
 package view.user;
 
 
-import models.Travel;
+import models.TravelModel;
 
-public class SingleTravelDetailsController {
+public class SingleTravelDetailsView {
   
-    public static void getTravleDetails(Travel travelsDetails){
+    public static void getTravleDetails(TravelModel travelsDetails){
         System.out.println(" **   Title: " + travelsDetails.getTitle());
         System.out.println(" **   Description: " + travelsDetails.getDescription());
         System.out.println(" **   city: " + travelsDetails.getCity());

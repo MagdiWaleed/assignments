@@ -1,22 +1,22 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
+import controller.UserLoginController;
 import data.TravelsData;
 import data.UsersData;
-import models.Travel;
-import models.User;
+import models.TravelModel;
+import models.UserModel;
 import view.Helper;
 import view.admin.AdminPage;
-import view.user.UserLoginController;
 import view.user.UserPage;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Travel [] inizilzedTravlesData = TravelsData.generateIntialTravelsData();
-        User[] all_users = UsersData.generateUsersData(inizilzedTravlesData);
-        Travel[] all_travles = TravelsData.generateTravelsData(all_users,inizilzedTravlesData);// make relation many to many between the users and the travels
+        TravelModel [] inizilzedTravlesData = TravelsData.generateIntialTravelsData();
+        UserModel[] all_users = UsersData.generateUsersData(inizilzedTravlesData);
+        TravelModel[] all_travles = TravelsData.generateTravelsData(all_users,inizilzedTravlesData);// make relation many to many between the users and the travels
         Scanner scanner = new Scanner(System.in);
-        User current_user = null;
+        UserModel current_user = null;
         //get current user object
         do {
             String choice;// chooser
@@ -65,8 +65,8 @@ public class App {
                     }
                     System.out.print("Enter your money: ");
                     double usermoney = scanner.nextDouble();
-                    User newuser = new User(username, usermoney);// create new user instance
-                    User [] newUsersList = Arrays.copyOf(all_users, all_users.length+1);
+                    UserModel newuser = new UserModel(username, usermoney);// create new user instance
+                    UserModel [] newUsersList = Arrays.copyOf(all_users, all_users.length+1);
                     newUsersList[all_users.length] = newuser; //append it to the list of users
                     all_users = newUsersList;
                  

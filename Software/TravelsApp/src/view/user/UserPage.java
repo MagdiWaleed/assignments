@@ -2,12 +2,12 @@ package view.user;
 
 import java.util.Scanner;
 
-import models.Travel;
-import models.User;
+import models.TravelModel;
+import models.UserModel;
 import view.Helper;
 
     public class UserPage {
-            public static void loadPgae(User current_user,Travel [] all_travles){
+            public static void loadPgae(UserModel current_user,TravelModel [] all_travles){
                 Scanner userScanner = new Scanner(System.in);
             do{
                 ////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@ import view.Helper;
                         AppBar(current_user);// all travels screen/////////////////////////////
 
                         System.out.println("    ////// Welcome all Travels Page!.. type travel number to view its details or (q) to quit //////");
-                        TravelsController.viewTravelsList(all_travles);
+                        TravelsView.viewTravelsList(all_travles);
                         System.out.print("Enter Travel Number To View its Details: "); 
                         String travel_index_input = userScanner.next();
                         if (travel_index_input.equals("q")) break;
@@ -39,8 +39,8 @@ import view.Helper;
                             ////////////////////////////////////////////////////////////////////////////////////
                             AppBar(current_user);//here travel details will start/////////////////////////////
                             
-                            Travel current_travel = all_travles[travel_index];    
-                            SingleTravelDetailsController.getTravleDetails(current_travel);
+                            TravelModel current_travel = all_travles[travel_index];    
+                            SingleTravelDetailsView.getTravleDetails(current_travel);
                             System.out.print("do you want to booked it? (y) for yes (n) for no or (q) to quit: ");
                             char answer = userScanner.next().charAt(0);
                             if(answer== 'y'){ 
@@ -60,9 +60,9 @@ import view.Helper;
                     case '2':{
                         ////////////////////////////////////////////////////////////////////////////////////
                         AppBar(current_user);//my travels screen/////////////////////////////
-                        Travel [] my_travels = current_user.getMyTravels(all_travles);
+                        TravelModel [] my_travels = current_user.getMyTravels(all_travles);
                         System.out.println("    ////// Welcome to your booked Travels Page!.. type travel number to view its details or (q) to quit //////");
-                        boolean doIhaveTravles = TravelsController.viewTravelsList(my_travels);
+                        boolean doIhaveTravles = TravelsView.viewTravelsList(my_travels);
                         if (doIhaveTravles){
                             System.out.print("Enter Travel Number: ");
                             String input =userScanner.next();
@@ -76,8 +76,8 @@ import view.Helper;
                             int travel_index =Integer.parseInt(travel_index_input)- 1;// becase the visualization is strating from 1
                             ////////////////////////////////////////////////////////////////////////////////////
                             AppBar(current_user);//single travel screen/////////////////////////////
-                            Travel current_travel = my_travels[travel_index];
-                            SingleTravelDetailsController.getTravleDetails(current_travel);
+                            TravelModel current_travel = my_travels[travel_index];
+                            SingleTravelDetailsView.getTravleDetails(current_travel);
                             System.out.print("do you want to unbooked it? (y) for yes (n) for no or (q) to quit: ");
                             char answer = userScanner.next().charAt(0);
                 
@@ -103,7 +103,7 @@ import view.Helper;
 
         }
     
-        private static void AppBar( User current_user) {
+        private static void AppBar( UserModel current_user) {
         
         Helper.clearScreen();
         System.out.println("Welcome " + current_user.getUsername() + "! the rest of Your money is: (" + current_user.getTheRestOfTheMoney()+ ") out of("+current_user.getOriginalMoney()+") Number of travels: " +current_user.getNumberOfTravles());
